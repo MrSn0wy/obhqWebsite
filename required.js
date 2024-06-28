@@ -27,15 +27,15 @@ function adjustScreenSize(phoneReferenceWidth) {
 
         if (screenWidth < "370") {
             // no point to check for avif here, since the favicon already loads the png version :/
-            headerIcon.src = "/obhqWebsite/_images/Obliteration-smoll.png";
+            headerIcon.src = "/_images/Obliteration-smoll.png";
 
         } else {
             // check avif support
-            if (avifSupport && headerIcon.src !== ("/obhqWebsite/_images/Obliteration.avif")) {
-                headerIcon.src = "/obhqWebsite/_images/Obliteration.avif";
+            if (avifSupport && headerIcon.src !== ("/_images/Obliteration.avif")) {
+                headerIcon.src = "/_images/Obliteration.avif";
 
-            } else if (!avifSupport && headerIcon.src !== ("/obhqWebsite/_images/Obliteration.png")) {
-                headerIcon.src = "/obhqWebsite/_images/Obliteration.png";
+            } else if (!avifSupport && headerIcon.src !== ("/_images/Obliteration.png")) {
+                headerIcon.src = "/_images/Obliteration.png";
             }
         }
     }
@@ -62,12 +62,12 @@ function menuButton() {
 
     if (menuState === true) { // if its open, close it
         menuState = false;
-        menuButton.src = "/obhqWebsite/_images/close.svg";
+        menuButton.src = "/_images/close.svg";
         menu.classList.remove("NoOpacity")
 
     } else if (menuState === false) { // if its closed, open it
         menuState = true;
-        menuButton.src = "/obhqWebsite/_images/menu.svg";
+        menuButton.src = "/_images/menu.svg";
         menu.classList.add("NoOpacity");
     }
 }
@@ -111,21 +111,21 @@ async function init() {
 
     let header_html = `
         <header class="header">
-            <a class="headerIcon NoOpacity" href="/obhqWebsite/">
-                <img id="headerIcon" src="/obhqWebsite/_images/Obliteration.avif" height="40px" width="auto" alt="Obliteration logo">
+            <a class="headerIcon NoOpacity" href="/">
+                <img id="headerIcon" src="/_images/Obliteration.avif" height="40px" width="auto" alt="Obliteration logo">
             </a>
             <div class="headerRight NoOpacity">
-                <a class="headerLink" href="/obhqWebsite/download">Download</a>
-                <a class="headerLink" href="/obhqWebsite/compatibility">Compatibility</a>
-                <a class="headerLink" href="/obhqWebsite/wiki">Wiki</a>
+                <a class="headerLink" href="/download">Download</a>
+                <a class="headerLink" href="/compatibility">Compatibility</a>
+                <a class="headerLink" href="/wiki">Wiki</a>
                 <div class="headerRightIcons">
                     <a href="https://github.com/obhq/obliteration" target="_blank" rel="noopener" style="display: flex;">
-                        <img class="headerRightIconGithub" src="/obhqWebsite/_images/github.svg" alt="GitHub logo">
+                        <img class="headerRightIconGithub" src="/_images/github.svg" alt="GitHub logo">
                     </a>
                     <a href="https://discord.gg/Qsdaxj6tnH" target="_blank" rel="noopener" style="display: flex;">
-                        <img class="headerRightIconDiscord" src="/obhqWebsite/_images/discord.svg" alt="Discord logo">
+                        <img class="headerRightIconDiscord" src="/_images/discord.svg" alt="Discord logo">
                     </a>
-                    <img class="headerRightIconMenu" src="/obhqWebsite/_images/menu.svg" onclick="menuButton()" id="menuButton" alt="Mobile menu button">
+                    <img class="headerRightIconMenu" src="/_images/menu.svg" onclick="menuButton()" id="menuButton" alt="Mobile menu button">
                 </div>
             </div>
         </header>`;
@@ -133,9 +133,9 @@ async function init() {
     let menu_html = `
         <div class="menuContainer NoOpacity" id="menu" onclick="menuButton()">
             <div class="menu">
-                <a class="menuLink" href="/obhqWebsite/download">Download</a>
-                <a class="menuLink" href="/obhqWebsite/compatibility">Compatibility</a>
-                <a class="menuLink" href="/obhqWebsite/wiki">Wiki</a>
+                <a class="menuLink" href="/download">Download</a>
+                <a class="menuLink" href="/compatibility">Compatibility</a>
+                <a class="menuLink" href="/wiki">Wiki</a>
             </div>
         </div>`;
 
