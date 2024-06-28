@@ -2,7 +2,6 @@
 
 let menuState = true;
 let Timer = 0;
-// let url_prefix = "/obhqWebsite/public_html/Gamma-Boi"
 let avifSupport;
 
 // Adjust screen size for mobile and 4k monitors for some reason
