@@ -1,0 +1,408 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="The wiki for Obliteration">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="home.html">Introduction</a></li><li class="chapter-item expanded "><a href="common_issues/common_issues.html"><strong aria-hidden="true">1.</strong> Common Issues</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_issues/couldnt_create_hypervisor.html"><strong aria-hidden="true">1.1.</strong> Couldn't Create a Hypervisor</a></li></ol></li><li class="chapter-item expanded "><a href="compilation_development/compilation_development.html"><strong aria-hidden="true">2.</strong> Compilation & Development</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="compilation_development/compilation.html"><strong aria-hidden="true">2.1.</strong> Compilation</a></li><li class="chapter-item expanded "><a href="compilation_development/development.html"><strong aria-hidden="true">2.2.</strong> Development</a></li></ol></li><li class="chapter-item expanded "><a href="firmware_setup/firmware_setup.html"><strong aria-hidden="true">3.</strong> Firmware Setup Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="firmware_setup/using_ftp.html"><strong aria-hidden="true">3.1.</strong> Using FTP</a></li><li class="chapter-item expanded "><a href="firmware_setup/using_localfiles.html"><strong aria-hidden="true">3.2.</strong> Using Local Files</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 align="center">
+  <img src="https://github.com/obhq/obliteration/blob/main/logo.png?raw=true" alt="Obliteration" width="720">
+  <br>
+  <sub><sup>A work-in-progress PS4 emulator written in Rust</sup></sub>
+  <br>
+</h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 align="center">
+  <b>Common Issues</b>
+  <br>
+  <sub><sup>A list of issues with potential solutions that occur in common scenarios!</sup></sub>
+  <br>
+</h1><div style="break-before: page; page-break-before: always;"></div><h1 id="couldnt-create-a-hypervisor"><a class="header" href="#couldnt-create-a-hypervisor">Couldn't Create a Hypervisor</a></h1>
+<hr />
+<p>This error commonly occurs on machines that don't have virtualization enabled.</p>
+<p>The way to fix this issue is to access the UEFI and enable virtualization.
+The name depends on what motherboard you use, it could be called AMD-V, SMV, Intel VTT, Intel VT-d, and more! Always look at documentation if you don't know how to enable virtualization!</p>
+<p>If the error persists on Windows, go to Windows Features and enable Virtual Machine Platform, then reboot.*</p>
+<ul>
+<li>Note, most Windows 10 and 11 installations come with VMP already installed, and only need the UEFI setting enabled.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 align="center">
+  <b>Compilation & Development</b>
+  <br>
+  <sub><sup>A tutorial on how to compile Obliteration, and what you will need to begin developing!</sup></sub>
+  <br>
+</h1><div style="break-before: page; page-break-before: always;"></div><h1 id="building-from-source"><a class="header" href="#building-from-source">Building from source</a></h1>
+<hr />
+<h3 id="windows-prerequisites"><a class="header" href="#windows-prerequisites">Windows prerequisites</a></h3>
+<ul>
+<li><a href="https://visualstudio.microsoft.com/vs/">Visual Studio 2022</a>
+<ul>
+<li><code>Desktop development with C++</code> workload is required</li>
+</ul>
+</li>
+<li><a href="https://www.rust-lang.org/tools/install">Rust on the latest stable channel</a></li>
+<li><a href="https://cmake.org/download/">CMake 3.21+</a>
+<ul>
+<li>Make sure you have <code>Add CMake to the system PATH</code> selected when installing</li>
+</ul>
+</li>
+<li><a href="https://ninja-build.org">Ninja</a>
+<ul>
+<li>Make sure Ninja is added to <code>PATH</code></li>
+<li>Note, if you're having trouble, you can install <code>ninja</code> using <a href="https://chocolatey.org/install">Chocolatey</a> with <code>choco install ninja</code>!</li>
+</ul>
+</li>
+</ul>
+<h3 id="linux-prerequisites"><a class="header" href="#linux-prerequisites">Linux prerequisites</a></h3>
+<ul>
+<li>GCC 9.4+</li>
+<li>Rust on the latest stable channel</li>
+<li>CMake 3.21+</li>
+</ul>
+<h3 id="macos-prerequisites"><a class="header" href="#macos-prerequisites">macOS prerequisites</a></h3>
+<ul>
+<li>macOS 12+</li>
+<li>Homebrew</li>
+<li>Clang 13+</li>
+<li>Rust on the latest stable channel</li>
+<li>CMake 3.21+</li>
+</ul>
+<h3 id="install-qt-6"><a class="header" href="#install-qt-6">Install Qt 6</a></h3>
+<p>You need to install Qt 6 on your system before you proceed. The minimum version is 6.5. You also need to enable SVG support when installing.</p>
+<h4 id="windows-specific-requirements"><a class="header" href="#windows-specific-requirements">Windows-specific requirements</a></h4>
+<p>You need <code>Qt Online Installer</code> for open-source to install Qt, downloaded from https://www.qt.io. The installer will ask you to sign in with a Qt account, which you can create for free. You need to check <code>Custom installation</code> and do not check <code>Qt for desktop development</code> that is using the MinGW toolchain. Make sure you have checked the <code>MSVC 2019 64-bit</code> component in the <code>Select Components</code> page for the version you wish to install and uncheck all of the other components.</p>
+<p>Once installation is completed you need to set the <code>CMAKE_PREFIX_PATH</code> environment variable to the full path of the installed version (e.g. <code>C:\Qt\6.5.1\msvc2019_64</code>). To set an environment variable:</p>
+<ol>
+<li>Open a run dialog with <kbd>Win</kbd> + <kbd>R</kbd>.</li>
+<li>Enter <code>sysdm.cpl</code> then click <code>OK</code>.</li>
+<li>Go to the <code>Advanced</code> tab then click on <code>Environment Variables...</code>.</li>
+<li>Click <code>New...</code> to create a new environment variable. Just create for either <code>User variables</code> or <code>System variables</code>, not both.</li>
+<li>Restart your terminal or IDE to load the new PATH.</li>
+</ol>
+<h4 id="install-qt-with-homebrew-macos-only"><a class="header" href="#install-qt-with-homebrew-macos-only">Install Qt with Homebrew (macOS only)</a></h4>
+<pre><code class="language-sh">brew install qt@6
+</code></pre>
+<h3 id="configure-build-system"><a class="header" href="#configure-build-system">Configure build system</a></h3>
+<pre><code class="language-sh">cmake --preset PRESET .
+</code></pre>
+<p>The value of <code>PRESET</code> will depend on your platform and the build configuration you want to use. The current available presets are:</p>
+<ul>
+<li>windows-release</li>
+<li>windows-debug</li>
+<li>linux-release</li>
+<li>linux-debug</li>
+<li>mac-release</li>
+<li>mac-debug</li>
+</ul>
+<p>If all you want is to use the emulator, choose <code>[YOUR-PLATFORM]-release</code> for optimized outputs. But if you want to edit the code, choose <code>*-debug</code>.</p>
+<h3 id="build"><a class="header" href="#build">Build</a></h3>
+<pre><code class="language-sh">cmake --build --preset PRESET
+</code></pre>
+<p>You can use <code>-j</code> to enable parallel building (e.g. <code>cmake --build --preset PRESET -j 2</code>). Each parallel build on Linux consumes a lot of memory so don't use the number of your CPU cores otherwise your system might crash due to out of memory. On Windows and macOS it seems like it is safe to use the number of your CPU cores.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="development"><a class="header" href="#development">Development</a></h1>
+<hr />
+<h3 id="recommended-code-editor"><a class="header" href="#recommended-code-editor">Recommended Code Editor</a></h3>
+<p>Before proceeding, make sure the build preset you are using is <code>*-debug</code>. We recommend <a href="https://code.visualstudio.com/Download">Visual Studio Code</a> as a code editor with the following extensions:</p>
+<ul>
+<li>CMake Tools (<a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools">Visual Studio Marketplace</a> | <a href="https://open-vsx.org/extension/ms-vscode/cmake-tools">Open VSX</a>)</li>
+<li>clangd (<a href="https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd">Visual Studio Marketplace</a> | <a href="https://open-vsx.org/extension/llvm-vs-code-extensions/vscode-clangd">Open VSX</a>)</li>
+<li>rust-analyzer (<a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer">Visual Studio Marketplace</a> | <a href="https://open-vsx.org/extension/rust-lang/rust-analyzer">Open VSX</a>)</li>
+<li>CodeLLDB (<a href="https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb">Visual Studio Marketplace</a> | <a href="https://open-vsx.org/extension/vadimcn/vscode-lldb">Open VSX</a>)</li>
+</ul>
+<p>Then open this folder with VS Code. It will ask which CMake preset to use and you need to choose the same one that you were using when building. Everything should work out of the box (e.g. code completion, debugging, etc).</p>
+<h3 id="macos-debugging-issues"><a class="header" href="#macos-debugging-issues">macOS debugging issues</a></h3>
+<p>If you can't launch or debug Obliteration from VS Code, try <a href="https://github.com/vadimcn/codelldb/discussions/456#discussioncomment-874122">this</a> solution.</p>
+<h3 id="get-a-homebrew-application-for-testing"><a class="header" href="#get-a-homebrew-application-for-testing">Get a homebrew application for testing</a></h3>
+<p>If you don't have a PS4 application for testing you can download PS Scene Quiz for free <a href="https://pkg-zone.com/details/LAPY10010">here</a>.</p>
+<h3 id="rules-for-rust-sources"><a class="header" href="#rules-for-rust-sources">Rules for Rust sources</a></h3>
+<ul>
+<li>Use unsafe code only when you know what you are doing. When you do try to wrap it in a safe function so other people who are not familiar with unsafe code can have a safe life.</li>
+<li>Don't chain method calls without an intermediate variable if the result code is hard to follow. We encourage code readability as a pleasure when writing so try to make it easy to read and understand for other people.</li>
+<li>Do not blindly cast an integer. Make sure the value can fit in a destination type. We don't have any plans to support non-64-bit systems so the pointer size and its related types like <code>usize</code> are always 64-bits.</li>
+<li>Beware of deadlock and memory leak. Rust can protect us from most mistakes, except those two. Deadlock can be happen easily in Rust because Rust requires us to wrap the data we want to protect with a mutex and get a mutable reference through it. The problem with this is it become natural for you to lock the mutex to operate on the inner data, which can easily cause a deadlock if you are not aware when there are another locks being active. The only cases for memory leak you need to aware is when working with <code>Arc</code>. Just make sure you don't create a reference cycle that will never be dropped.</li>
+</ul>
+<h3 id="rules-for-c-sources"><a class="header" href="#rules-for-c-sources">Rules for C++ sources</a></h3>
+<p>Just follow how Qt is written (e.g. coding style, etc.). Always prefers Qt classes over <code>std</code> when possible so you don't need to handle exceptions. Do not use the Qt <code>ui</code> file to design the UI because it will break on a high-DPI screen.</p>
+<h3 id="starting-point"><a class="header" href="#starting-point">Starting point</a></h3>
+<p>The application consists of 2 binaries:</p>
+<h4 id="frontend"><a class="header" href="#frontend">Frontend</a></h4>
+<p>This is what users will see when they launch Obliteration. Its entry point is inside <code>src/main.cpp</code>.</p>
+<h4 id="kernel"><a class="header" href="#kernel">Kernel</a></h4>
+<p>This is where emulation takes place. Its entry point is inside <code>src/kernel/src/main.rs</code>.</p>
+<h3 id="debugging-the-kernel"><a class="header" href="#debugging-the-kernel">Debugging the kernel</a></h3>
+<p>Create <code>.kernel-debug</code> in the root of the repository. The contents of this file is YAML and the kernel will deserialize it to the <code>Args</code> struct in <code>src/kernel/src/main.rs</code> when passing the <code>--debug</code> flag to the kernel. See <code>Args</code> struct for available options.</p>
+<p>We already provide a launch configuration for VS Code so all you need to do is choose <code>Debug - Kernel</code> as the configuration and start debugging.</p>
+<h3 id="code-contribution"><a class="header" href="#code-contribution">Code contribution</a></h3>
+<p>If you want to make some contributions but don't know what to work on you can look for <code>TODO</code> comment or <code>todo!</code> macro invocation in the source code. You can also take a look at unassigned issues.</p>
+<h3 id="additional-informations"><a class="header" href="#additional-informations">Additional informations</a></h3>
+<p><a href="https://www.psdevwiki.com/ps4">PS4 Developer Wiki</a> has a lot of useful information about the PS4 internal. We also have a PS4 reverse engineering <a href="https://github.com/obhq/reverse-engineering">project</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 align="center">
+  <b>Firmware Setup</b>
+  <br>
+  <sub><sup>A guide for completing the Firmware step of the Obliteration Wizard</sup></sub>
+  <br>
+</h1><div style="break-before: page; page-break-before: always;"></div><h1 id="firmware-setup-via-ftp"><a class="header" href="#firmware-setup-via-ftp">Firmware Setup via FTP</a></h1>
+<hr />
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<ul>
+<li>A PS4 with jailbreakable firmware, recommended is 9.00, the latest firmware with a jailbreak.</li>
+<li>650~ MB of free disk space for Firmware.</li>
+<li>Computer and PS4 connected to the same network.</li>
+</ul>
+<h3 id="goldhen"><a class="header" href="#goldhen">Goldhen</a></h3>
+<p>This is the most common way to activate your PS4's FTP server as it is built into the jailbreak.</p>
+<ol>
+<li>Activate FTP Server in the Goldhen Settings</li>
+</ol>
+<p>https://github.com/obhq/obliteration/assets/45863583/cc76a763-22cf-42d5-be00-2490df530fd4</p>
+<p>Go to Settings, then Goldhen, Server Settings, and enable Enable FTP Server. You'll be give an IP address and a port number (Usually 2121)</p>
+<ol start="2">
+<li>Type the IP address and Port into the wizard.</li>
+</ol>
+<p><img src="https://github.com/obhq/obliteration/assets/45863583/ab0539f0-bda9-4d36-8f51-7e5290fc9b72" alt="image" /></p>
+<p>Type the it into the format of IP:PORT. As shown above, I'd type in <code>192.168.86.37:2121</code> for my PS4.</p>
+<p><strong>DO NOT ENABLE <code>Explicit Decryption</code> FOR GOLDHEN! IT IS AUTOMATICALLY ENABLED.</strong></p>
+<ol start="3">
+<li>
+<p>Hit next, wait for the files to transfer, then enjoy!</p>
+<p>All files are transferred to a folder called /system within' the folder you selected.
+For example, if you selected your system directory to be <code>F:/stuff/</code>, your firmware would be stored inside of <code>F:/stuff/system</code>.</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="firmware-setup-via-local-files"><a class="header" href="#firmware-setup-via-local-files">Firmware Setup via Local Files</a></h1>
+<hr />
+<h3 id="prerequisites-1"><a class="header" href="#prerequisites-1">Prerequisites</a></h3>
+<ul>
+<li>A legally obtained firmware dump typically directly from a jailbroken PS4</li>
+<li>650~ MB of free disk space for transferred Firmware.</li>
+</ul>
+<h3 id="steps"><a class="header" href="#steps">Steps</a></h3>
+<ol>
+<li>Proceed through the wizard until you reach the FTP transfer step.</li>
+</ol>
+<p><img src="https://github.com/obhq/obliteration/assets/45863583/ede5f7e5-72ae-43aa-b141-3304436f61d3" alt="image" /></p>
+<p>REMEMBER the system path you selected in the wizard! You'll be transferring the firmware to that folder.</p>
+<ol start="2">
+<li>Close the wizard and open your previously picked system path.</li>
+</ol>
+<p><img src="https://github.com/obhq/obliteration/assets/45863583/a394fa7d-dd12-47cc-a32f-75a25994b193" alt="Screenshot 2023-11-12 233746" /></p>
+<ol start="3">
+<li>Place firmware into the path under a folder named 'system', then enjoy!</li>
+</ol>
+<p><img src="https://github.com/obhq/obliteration/assets/45863583/a07afe0b-f79e-4a30-b3dd-87c8d13854a6" alt="image" />
+<img src="https://github.com/obhq/obliteration/assets/45863583/f2f80319-778e-419a-bd00-c694893bb85a" alt="image" /></p>
+<p>As an example, if you selected your system directory to be <code>F:/stuff/</code>, your firmware should be stored inside of <code>F:/stuff/system</code>.</p>
+<p>Ensure the folder contains <code>common, priv, sys, and vsh</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
